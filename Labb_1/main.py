@@ -1,37 +1,24 @@
-# from translator import Translator
+from translator import Translator
 from lexicon import Lexicon
 
 def training():
     """takes the parallel corpus and sends it to lexicon"""
-    # ../../smt/mini.txt
-#    filename = input("What file should I train with?\n")
-    my_lexicon = Lexicon()
-    my_lexicon.hello_world()
-    my_lexicon.readfile()
-    my_lexicon.minimize()
-    print(my_lexicon.l1_dict)
+    my_lexicon = Lexicon() #creates the Lexicon object "my_lexicon"
+    my_lexicon.hello_world() #test function todo: delete later!
+    my_lexicon.readfile() #creates large lexicon from parallel file
+    my_lexicon.minimize() #picks most frequent word as value
+    print("These are the things: ", my_lexicon.__dict__, my_lexicon.l1_dict)
+    return my_lexicon
 
-#    minimize(self, self.l1_dict)
-#    big_dict = Lexicon.readfile(filename)
-#    small_file = Lexicon.minimize(filename)
-
-#def fix_translation():
-#    """fixes the translation of user provided text"""
-#    trans_list = []
-#    org_sentence = input("What sentence would you like translated?\n")
-#    org_words = org_sentence.split(" ")
-#    org_words = Translator()
-#    #should 1: ask for text to be translated
-#    #should 2: use method in translator.py?
-
-#def show_translation():
-#    """print output to user"""
+def fix_translation(lexicon, text):
+    """fixes the translation of user provided text"""
+    my_translation = Translator(lexicon, text) #creates the Translator object "my_translator"
+    translation = my_translation.translate(text)
+    return translation
 
 if __name__ == "__main__":  # this is just good practice. It doesn't mean anything?
     #program starts with user giving filename as argument
-    training()
-
-
-
-#somewhere in this mainfile I shuld split the list of files and send them one at the time to translator
-''' for item in filenames:'''
+    lexicon = training()
+    text = input("What text would you like translated?\n")
+    translation = fix_translation(lexicon, text)
+    print(translation)

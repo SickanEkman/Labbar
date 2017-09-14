@@ -11,8 +11,9 @@ class Lexicon(object):
         self.mapping_list = []
 
     def hello_world(self):
-        #todo: delete this funtion later
-        print(self.l1_list,
+        #todo: delete this method later
+        print("Hello world!",
+        self.l1_list,
         self.l1_dict,
         self.l2_list,
         self.mapping_list,
@@ -35,15 +36,15 @@ class Lexicon(object):
                     if "\n" in self.l2_list[-1]:
                         self.l2_list[-1] = self.l2_list[-1].strip("\n")
                     self.mapping_list = ["???" if i == "-1" else i for i in self.mapping_list]
-                    print(self.mapping_list)  # todo: delete this line later!
+                    # print(self.mapping_list)  # todo: delete this line later!
                     # lines[3] + [4] do nothing
-                    self.l1_dict = map(self.l1_list, self.l2_list, self.mapping_list)  # gets dict from function "map"
+                    self.l1_dict = self.mapping(self.l1_list, self.l2_list, self.mapping_list)  # gets dict from function "map"
             except(IndexError):  # exception raised when whole parallel file is read
-                print(self.l1_dict)  # todo: delete this line later!
+                # print(self.l1_dict)  # todo: delete this line later!
                 return self.l1_dict  # saves the dictionary
         p_file.close()  # uneccessary since "with file as..." is used, but good practice to have in function
 
-    def map(self, l1_list, l2_list, mapping_list):
+    def mapping(self, l1_list, l2_list, mapping_list):
         """connects the l1 word to the l2 word"""
         x = 0
         while x < len(self.l1_list):
@@ -58,10 +59,13 @@ class Lexicon(object):
             else:  # if English word is already in dictionary
                 self.l1_dict[z].append(value)  # adds mapped foreign word as new list item in dictionary value
             x += 1
+        # print(self.l1_dict)
         return self.l1_dict
 
     def minimize(self):
         """counts most frequent translation and deletes the rest"""
+        print(self.l1_dict)
+        #print(self. l1_dict.items())
         for k, v in self.l1_dict.items():
             count = Counter(v)
             frequency_list = [(k, count[k]) for k in sorted(count, key=count.get, reverse=True)]
@@ -71,13 +75,14 @@ class Lexicon(object):
             else:
                 # print(frequency_list[0][0]) # todo: prints just to see that everything works - delete this line later!
                 self.l1_dict[k] = frequency_list[0][0]
+        print(self.l1_dict)
         return self.l1_dict
 
     def lookup(self, word):
         """takes a word as argument and returns the translation"""
         word = word.lower()
-        if word in l1_dict:
-            return l1_dict.get(word)
+        if word in self.l1_dict:
+            return self.l1_dict.get(word)
         else:
             return "???"
 

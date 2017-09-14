@@ -3,7 +3,6 @@ class Translator(object):
         self.lexicon = lexicon
         self.text = text
 
-
     def translate(self, text):
         """takes a sentence, returns the translation"""
         l1_list = text.split(' ')
@@ -13,20 +12,3 @@ class Translator(object):
             trans_list.append(trans_word)
         translation = " ".join(trans_list)
         return translation
-
-
-
-'''
-        or_list = or_sentence.split(" ")
-        for word in or_list:
-            trans_word = lookup(word)
-            trans_list.append(trans_word)
-        trans_sentence = " ".join(trans_list)
-
-#eller:?
-
-    for word in org_words:
-        trans_word = Lexicon.lexicon(org_word)
-        trans_list.append(trans_word)
-    trans_sentence = " ".join(trans_list)
-'''

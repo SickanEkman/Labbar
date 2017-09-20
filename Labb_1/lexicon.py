@@ -3,14 +3,14 @@ from collections import Counter
 
 
 class Lexicon(object):
-    def __init__(self):
-        self.filename = "../../smt/en-es-2006-01.txt"
+    def __init__(self, filename):
+        print("(Lexicon object created)")
+        self.filename = filename
         self.l1_list = []
         self.l1_dict = {}
         self.l2_list = []
         self.mapping_list = []
 
-    @property
     def readfile(self):
         """opens file and reads words to dict"""
         with open(self.filename, "r") as p_file:
@@ -21,12 +21,11 @@ class Lexicon(object):
                     self.l1_list = lines[0].split(" ")  # creates list with English words
                     self.l2_list = lines[1].split(" ")  # creates list with Foreign words
                     self.mapping_list = lines[2].split(" ")  # creates list with mapping numbers
-                    # self.mapping_list = ["???" if i == "-1" else i for i in self.mapping_list]
                     # lines[3] + [4] do nothing
                     self.l1_dict = self.mapping()  # gets dict from function "map"
             except IndexError:  # exception raised when whole parallel file is read
+                p_file.close()  # uneccessary since "with file as..." is used, but good practice to have in function
                 return self.l1_dict  # saves the dictionary
-        p_file.close()  # uneccessary since "with file as..." is used, but good practice to have in function
 
     def mapping(self):
         """connects the l1 word to the l2 word"""
